@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     // **Base URL for the Star Wars API**
-    const apiBaseUrl = 'https://swapi.tech/api/';
+    const apiBaseUrl = 'https://swapi.dev/api/';
     
     // **Reference to the main content area in the HTML**
     const mainContent = document.getElementById('main-content');
@@ -63,5 +63,3 @@ document.addEventListener('DOMContentLoaded', function () {
     // **Initial data fetch when the page loads**
     fetchData();
 });
-
-
