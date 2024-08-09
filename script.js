@@ -1,38 +1,56 @@
-//Fetch data from SWAPI and display it in script.js
-// Wait for the entire DOM (Document Object Model) to be fully loaded and parsed before executing the code within this function.
 document.addEventListener('DOMContentLoaded', function() {
+    const apiBaseUrl = 'https://swapi.tech/api/';
+    const mainContent = document.getElementById('main-content');
 
-    // Define the API endpoint URL to fetch Star Wars people data.
-    const apiUrl = 'https://swapi.tech/api/people'; 
+    function fetchData() {
+        const currentUrl = window.location.href;
+        let model;
 
-    // Fetch data from the specified API URL using the Fetch API.
-    fetch(apiUrl)
+        if (currentUrl.includes('index.html')) {
+            model = 'people';
+        } else if (currentUrl.includes('starships.html')) {
+            model = 'starships';
+        } else {
+            console.error('Invalid URL');
+            return;
+        }
 
-        // Parse the response as JSON.
-        .then(response => response.json())
+        const apiUrl = `${apiBaseUrl}${model}`;
 
-        // Process the fetched data.
-        .then(data => {
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                displayData(data.results, model);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
 
-            // Get a reference to the main content element where the data will be displayed.
-            const mainContent = document.getElementById('main-content'); 
+    function displayData(results, model) {
+        mainContent.innerHTML = ''; // Clear previous content
 
-            // Iterate through each 'person' object in the 'results' array of the fetched data.
-            data.results.forEach(person => {
+        results.forEach(item => {
+            const itemDiv = document.createElement('div');
 
-                // Create a new 'div' element to hold the person's information.
-                const personDiv = document.createElement('div');
+            switch (model) {
+                case 'people':
+                    itemDiv.innerHTML = `<h2>${item.name}</h2>
+                                         <p>Height: ${item.height}</p>
+                                         <p>Mass: ${item.mass}</p>`;
+                    break;
+                case 'starships':
+                    itemDiv.innerHTML = `<h2>${item.name}</h2>
+                                         <p>Model: ${item.model}</p>
+                                         <p>Manufacturer: ${item.manufacturer}</p>`;
+                    break;
+                default:
+                    break;
+            }
 
-                // Set the inner HTML of the 'div' to display the person's name, height, and mass.
-                personDiv.innerHTML = `<h2>${person.name}</h2>
-                                        <p>Height: ${person.height}</p>
-                                        <p>Mass: ${person.mass}</p>`;
+            mainContent.appendChild(itemDiv);
+        });
+    }
 
-                // Append the newly created 'personDiv' to the 'mainContent' element to display it on the page.
-                mainContent.appendChild(personDiv);
-            });
-        })
-
-        // Handle any errors that occur during the fetch process.
-        .catch(error => console.error('Error fetching data:', error)); 
+    // Fetch data based on the current page URL
+    fetchData();
 });
+
