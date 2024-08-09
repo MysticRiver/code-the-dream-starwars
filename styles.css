@@ -1,14 +1,17 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "restore", Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 header {
     background-color: #333;
-    color: white;
+    color: #FCE919;
     padding: 10px 0;
     text-align: center;
+    font-family: "restore", sans-serif;
+font-weight: 700;
+font-style: normal;
 }
 
 nav ul {
@@ -22,7 +25,12 @@ nav ul li {
 }
 
 nav ul li a {
-    color: white;
+    color: #FCE919;
+    padding: 10px 0;
+    text-align: center;
+    font-family: "restore", sans-serif;
+font-weight: 300;
+font-style: normal;
     text-decoration: none;
 }
 
